@@ -1,15 +1,26 @@
 {
-  "name": "src",
+  "name": "mod-10-challenge",
   "version": "1.0.0",
-  "description": "",
-  "main": "app.js",
+  "description": "dump for module 10 challenge repo",
+  "main": "index.js",
+  "directories": {
+    "example": "examples",
+    "lib": "lib"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ImperialSpaceCoalition/mod-10-challenge.git"
+  },
+  "author": "Joshua Nickelson",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/ImperialSpaceCoalition/mod-10-challenge/issues"
+  },
+  "homepage": "https://github.com/ImperialSpaceCoalition/mod-10-challenge#readme",
   "dependencies": {
-    "inquirer": "^9.2.15"
+    "inquirer": "^8.2.4"
   }
 }
