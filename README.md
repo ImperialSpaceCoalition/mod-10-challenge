@@ -14,7 +14,7 @@ using node, this application will generate a custom logo based on a 3 character 
 ## Installation
 before using the application, make sure to navigate to the index.js file, and then open it in an external terminal. using npm i, install the dependencies and then in the terminal, use node index.js to initiate the application. Follow the prompts and the logo.svg file will be located in the example folder. to view the created file, simply open it in your browser.
 
-Video Example found here:
+Video Example found here: https://drive.google.com/file/d/1BwIy6WPLb5SinWh5faHtUfWCuZa5zAGJ/view?usp=sharing
 
 ## Usage
 to generate custom logos
