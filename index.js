@@ -1,6 +1,7 @@
 // Require necessary modules
 const inquirer = require('inquirer');
 const fs = require('fs');
+const { Circle, Triangle, Square } = require('./lib/shapes');
 
 // Define function to prompt user for input
 function promptUser() {
@@ -8,20 +9,18 @@ function promptUser() {
         {
             type: 'input',
             name: 'text',
-            message: 'Enter up to three characters:',
+            message: 'Enter text:',
             validate: function (input) {
-                // Validate input to ensure it's up to three characters
-                if (input.length > 3) {
-                    return 'Please enter up to three characters.';
-                }
-                return true;
-            },
+                return input.trim() ? true : 'Text is required.';
+            }
         },
         {
             type: 'input',
             name: 'textColor',
             message: 'Enter text color:',
-            default: 'black' // Default to black color if user doesn't provide one
+            validate: function (input) {
+                return input.trim() ? true : 'Text color is required.';
+            }
         },
         {
             type: 'list',
@@ -33,29 +32,54 @@ function promptUser() {
             type: 'input',
             name: 'shapeColor',
             message: 'Enter shape color:',
-            default: 'white' // Default to white color if user doesn't provide one
+            validate: function (input) {
+                return input.trim() ? true : 'Shape color is required.';
+            }
+        },
+        {
+            type: 'input',
+            name: 'sideLength',
+            message: 'Enter side length (for Triangle/Square):',
+            when: function (answers) {
+                return answers.shape === 'Triangle' || answers.shape === 'Square';
+            },
+            validate: function (input) {
+                const num = parseFloat(input);
+                return !isNaN(num) && num > 0 ? true : 'Please enter a valid positive number.';
+            }
+        },
+        {
+            type: 'input',
+            name: 'radius',
+            message: 'Enter radius (for Circle):',
+            when: function (answers) {
+                return answers.shape === 'Circle';
+            },
+            validate: function (input) {
+                const num = parseFloat(input);
+                return !isNaN(num) && num > 0 ? true : 'Please enter a valid positive number.';
+            }
         }
     ]);
 }
-
-// Define function to generate SVG based on user input
+//Generate SVG from user input
 function generateSVG(data) {
     let shape;
     switch (data.shape) {
         case 'Circle':
-            shape = new Circle();
+            shape = new Circle(data.radius * 2); // Double the radius for larger circle
             break;
         case 'Triangle':
-            shape = new Triangle();
+            shape = new Triangle(data.sideLength * 2); // Double the side length for larger triangle
             break;
         case 'Square':
-            shape = new Square();
+            shape = new Square(data.sideLength * 2); // Double the side length for larger square
             break;
         default:
             throw new Error('Invalid shape selection.');
     }
 
-    return `<svg width="300" height="200" xmlns="http://www.w3.org/2000/svg">
+    return `<svg width="600" height="400" xmlns="http://www.w3.org/2000/svg"> <!-- Larger dimensions -->
                 ${shape.getSVG()}
                 <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="${data.textColor}">${data.text}</text>
             </svg>`;
