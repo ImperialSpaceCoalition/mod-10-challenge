@@ -3,6 +3,19 @@ const inquirer = require('inquirer');
 const fs = require('fs');
 const { Circle, Triangle, Square } = require('./lib/shapes');
 
+// Define basic color options
+const colorOptions = [
+    'black',
+    'white',
+    'red',
+    'blue',
+    'green',
+    'yellow',
+    'orange',
+    'purple',
+    'gray',
+];
+
 // Define function to prompt user for input
 function promptUser() {
     return inquirer.prompt([
@@ -15,12 +28,10 @@ function promptUser() {
             }
         },
         {
-            type: 'input',
+            type: 'list',
             name: 'textColor',
-            message: 'Enter text color:',
-            validate: function (input) {
-                return input.trim() ? true : 'Text color is required.';
-            }
+            message: 'Choose a text color:',
+            choices: colorOptions,
         },
         {
             type: 'list',
@@ -29,12 +40,10 @@ function promptUser() {
             choices: ['Circle', 'Triangle', 'Square']
         },
         {
-            type: 'input',
+            type: 'list',
             name: 'shapeColor',
-            message: 'Enter shape color:',
-            validate: function (input) {
-                return input.trim() ? true : 'Shape color is required.';
-            }
+            message: 'Choose a shape color:',
+            choices: colorOptions, // Use the color options array
         },
         {
             type: 'input',
@@ -62,28 +71,51 @@ function promptUser() {
         }
     ]);
 }
-//Generate SVG from user input
+
+// Define function to generate SVG based on user input
 function generateSVG(data) {
     let shape;
     switch (data.shape) {
         case 'Circle':
-            shape = new Circle(data.radius * 2); // Double the radius for larger circle
+            shape = new Circle(data.radius);
             break;
         case 'Triangle':
-            shape = new Triangle(data.sideLength * 2); // Double the side length for larger triangle
+            shape = new Triangle(data.sideLength);
             break;
         case 'Square':
-            shape = new Square(data.sideLength * 2); // Double the side length for larger square
+            shape = new Square(data.sideLength);
             break;
         default:
             throw new Error('Invalid shape selection.');
     }
 
-    return `<svg width="600" height="400" xmlns="http://www.w3.org/2000/svg"> <!-- Larger dimensions -->
-                ${shape.getSVG()}
-                <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="${data.textColor}">${data.text}</text>
+    // Calculate shape position to center it
+    const shapeX = 150 - (shape.getWidth() / 2); // Center shape horizontally
+    const shapeY = 100 - (shape.getHeight() / 2); // Center shape vertically
+
+    // Map color keywords to hexadecimal values
+    const colors = {
+        'gray': '#808080',
+        black: '#000000',
+        white: '#FFFFFF',
+        red: '#FF0000',
+        blue: '#0000FF',
+        green: '#008000',
+        yellow: '#FFFF00',
+        orange: '#FFA500',
+        purple: '#800080',
+        // Add more color mappings as needed
+    };
+    const shapeColor = colors[data.shapeColor] || data.shapeColor; // Use shape color provided by user
+
+    return `<svg width="300" height="200" xmlns="http://www.w3.org/2000/svg">
+                ${shape.getSVG(shapeColor, shapeX, shapeY)} <!-- Pass shape color and position -->
+                <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="${data.textColor}" font-size="30">${data.text}</text>
             </svg>`;
 }
+
+
+
 
 // Define function to save SVG to file
 function saveSVG(svg) {

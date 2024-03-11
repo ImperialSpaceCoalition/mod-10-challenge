@@ -1,4 +1,6 @@
-<svg width="600" height="400" xmlns="http://www.w3.org/2000/svg"> <!-- Larger dimensions -->
-                <polygon points="150,273.2050807568877 -150,-73.20508075688772 450,-73.20508075688772" />
-                <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="black">ISC</text>
+<svg width="300" height="200" xmlns="http://www.w3.org/2000/svg">
+                <g transform="translate(0,-29.9038105676658)">
+                    <polygon points="0,300 150,0 300,300" fill="#FF0000" />
+                </g> <!-- Pass shape color and position -->
+                <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="black" font-size="30">ISC</text>
             </svg>
