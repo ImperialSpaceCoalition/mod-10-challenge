@@ -48,7 +48,7 @@ function promptUser() {
         {
             type: 'input',
             name: 'sideLength',
-            message: 'Enter side length (for Triangle/Square):',
+            message: 'Enter side length (for Triangle/Square)200 -300 Reccomended:',
             when: function (answers) {
                 return answers.shape === 'Triangle' || answers.shape === 'Square';
             },
@@ -60,7 +60,7 @@ function promptUser() {
         {
             type: 'input',
             name: 'radius',
-            message: 'Enter radius (for Circle):',
+            message: 'Enter radius (for Circle)200-300 Recommended:',
             when: function (answers) {
                 return answers.shape === 'Circle';
             },
